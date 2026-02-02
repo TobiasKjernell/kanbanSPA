@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { EditKanbanPost, getUsers } from "../../../lib/supabase/queriesClient.ts";
 import { kanbanPostSchema } from "../../../schemas/schemas.ts";
 import { useTicketEdit } from "../context/useTicketContext";
-import DashboardKanbanDelete from "../DashboardKanbanDelete/index.tsx";
 import { UpdateTypeEnum } from "../index.tsx";
+import DashboardKanbanDelete from "../DashboardKanbanDelete/index.tsx";
 
 
 const DashboardKanbanEdit = () => {

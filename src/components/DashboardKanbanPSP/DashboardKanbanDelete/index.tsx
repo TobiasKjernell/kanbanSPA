@@ -1,15 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
-import { useTicketEdit } from "../../context/useTicketContext";
-import { DeleteTicket, type IdProject } from "../../../../lib/supabase/queriesClient";
-import { Spinner } from "../../../shared/Spinner/spinner";
+import { useTicketEdit } from "../context/useTicketContext";
+import { DeleteTicket, IdProject } from "../../../lib/supabase/queriesClient";
+import { Spinner } from "../../shared/Spinner/spinner";
+
 
 
 const DashboardKanbanDelete = () => {
-    const { currentTicket, toggleEditing, handleSetTicket } = useTicketEdit();
+    const { currentTicket,  handleSetTicket } = useTicketEdit();
     const { mutate, isPending, error } = useMutation(
         {
             mutationFn: DeleteTicket,
-            onSuccess: () => { handleSetTicket(null); toggleEditing(); }
+            onSuccess: () => { handleSetTicket(null);  }
         },
     );
 
