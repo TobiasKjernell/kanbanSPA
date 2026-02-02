@@ -3,7 +3,7 @@ import AppLayout from "./components/AppLayout"
 import ProtectedRoute from "./components/ProtectedRoute"
 import DashboardPage from "./pages/DashboardPage"
 import { QueryClientProvider } from "./providers/queryClient"
-import LoginPage from "./pages/Login"
+import LoginPage from "./pages/LoginPage"
 
 function App() {
   return (
