@@ -17,11 +17,11 @@ function App() {
               </ProtectedRoute>}>
               <Route index element={<Navigate replace to='dashboard' />} />
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Route>  
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
-      </QueryClientProvider>  
+      </QueryClientProvider>
     </>
   )
 }
