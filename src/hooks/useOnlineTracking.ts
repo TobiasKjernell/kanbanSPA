@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 import { useUser } from './useUser'
 import { supabase } from '../lib/supabase/queriesClient'
 
-
-
 export type RealtimeUser = {
     id: string
     name: string
