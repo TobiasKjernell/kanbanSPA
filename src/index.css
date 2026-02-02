@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {}
+
+@font-face {
+  src: url("/fonts/Jura-Regular.ttf") format("truetype");
+  font-family: 'Jura';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 700;
+}
+
+@theme {
+  --font-jura: "Jura";  
+}
+
+@layer components { 
+  .psp-background-light {
+    background-color: #161f32;
+  }
+
+  .psp-background-dark {
+    background-color: #0a1428;
+  }
+
+  .psp-border-color {
+    border-color: #cea86f;
+  }
+
+  .psp-linear-background {
+    background: linear-gradient(to bottom right, #161f32, #0a1428)
+  }
+
+  .psp-text-gold {
+    color: #cea86f;
+  }
+
+  .psp-gsap-reset {
+    transform: none !important;
+    right: 0% !important;
+    top: 0 !important;
+  }
+
+}
+
+body {
+  font-family: "Jura", serif;
+}
