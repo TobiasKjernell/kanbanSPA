@@ -11,7 +11,7 @@ export enum IdProject {
     website = 3
 }
 
-export const supabase = createClient<Database>(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY);
+export const supabase = createClient<Database>(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 export const singleKanbaPost = (project_id: IdProject) => {
     return supabase.from(`kanbanPosts_${project_id}`).select('*').single();
