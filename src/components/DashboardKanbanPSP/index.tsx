@@ -56,7 +56,7 @@ const DashboardKanbanPSP = ({ currentProjectID }: { currentProjectID: IdProject 
                     table: `kanbanPosts_${currentProjectID}`,
                 },
                 (payload) => {
-                    let kan = payload.new as SingleKanbanPost;
+                    let kan = payload.new as SingleKanbanPost;      
 
                     switch (payload.eventType) {
                         case "INSERT":

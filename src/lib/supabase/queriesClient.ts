@@ -109,6 +109,54 @@ export const fetchKanbanData = async (projectId: IdProject, setPosts: Dispatch<S
 };
 
 
+// ─── Game Settings ───
+
+export const getGameSettings = async (projectId: IdProject) => {
+    return supabase.from(`gameSettings_${projectId}`).select('*');
+};
+
+export const getGameSettingsBySection = async (projectId: IdProject, section: string) => {
+    return supabase.from(`gameSettings_${projectId}`).select('*').eq('section', section);
+};
+
+export const updateGameSetting = async (projectId: IdProject, section: string, key: string, value: string) => {
+    const { error } = await supabase
+        .from(`gameSettings_${projectId}`)
+        .update({ value })
+        .eq('section', section)
+        .eq('key', key);
+    if (error) throw new Error(error.message);
+};
+
+export const updateGameSettingsSection = async (
+    projectId: IdProject,
+    section: string,
+    settings: Record<string, string | number | boolean>
+) => {
+    const updates = Object.entries(settings).map(([key, value]) =>
+        supabase
+            .from(`gameSettings_${projectId}`)
+            .update({ value: String(value) })
+            .eq('section', section)
+            .eq('key', key)
+    );
+    const results = await Promise.all(updates);
+    const failed = results.find((r) => r.error);
+    if (failed?.error) throw new Error(failed.error.message);
+};
+
+// ─── Types ───
+
+export type GameSettingRow = {
+    id: number;
+    section: string;
+    key: string;
+    value: string;
+    value_type: string;
+    updated_at: string;
+    updated_by: string | null;
+};
+
 export type KanbanColumns = QueryData<ReturnType<typeof getAllColumns>>
 export type SingleKanbanPost = QueryData<ReturnType<typeof singleKanbaPost>>
 export type KanbanPosts = QueryData<ReturnType<typeof allKanbanPosts>>

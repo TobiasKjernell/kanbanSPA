@@ -9,7 +9,7 @@ const LoginForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(loginSchema), mode: 'onChange' });
 
     return (
-        <form onSubmit={handleSubmit(values => login((values)))} className="p-4 flex flex-col w-full md:w-[400px] mx-auto bg-neutral-900 rounded-2xl border text-white" >
+        <form onSubmit={handleSubmit(values => login((values)))} className="p-4 flex flex-col w-full md:w-100 mx-auto bg-neutral-900 rounded-2xl border text-white" >
             <div className='mb-5'>
                 <h2 className='text-lg font-semibold'>Login to your account</h2>
                 <p className='text-muted-foreground'>Enter your email and password below</p >

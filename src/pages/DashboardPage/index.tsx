@@ -1,19 +1,25 @@
 import { Suspense } from "react";
 import DashboardKanbanPSP from "../../components/DashboardKanbanPSP";
 import { EditTicketProvider } from "../../components/DashboardKanbanPSP/context/useTicketContext";
+import GameSettings from "../../components/GameSettings";
 import { Spinner } from "../../components/shared/Spinner/spinner";
 import { useProjectStore } from "../../zustand/store";
 
 const DashboardPage = () => {
 
     const currentProjectID = useProjectStore((state) => state.currentProjectID)
+    const currentView = useProjectStore((state) => state.currentView)
 
     return (
         <EditTicketProvider>
-            <div className="bg-[#111] flex-1 ">
-                <Suspense fallback={<Spinner />}>
-                  <DashboardKanbanPSP currentProjectID={currentProjectID} />;
-                </Suspense>
+            <div className="bg-[#111] flex-1 overflow-hidden">
+                {currentView === "kanban" ? (
+                    <Suspense fallback={<Spinner />}>
+                        <DashboardKanbanPSP currentProjectID={currentProjectID} />
+                    </Suspense>
+                ) : (
+                    <GameSettings currentProjectID={currentProjectID} />
+                )}
             </div>
         </EditTicketProvider>
     )
