@@ -59,8 +59,10 @@ export default function GanttChart() {
   const [editingPerson, setEditingPerson] = useState<string | null>(null);
   const [colorPicker, setColorPicker] = useState<string | null>(null);
   const [totalDays, setTotalDays] = useState(183);
+  const totalDaysRef = useRef(183);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  totalDaysRef.current = totalDays;
   const months = useMemo(() => generateMonths(totalDays), [totalDays]);
 
   function addMonth() {
@@ -75,6 +77,8 @@ export default function GanttChart() {
       const ms = generateMonths(prev);
       if (ms.length <= 1) return prev;
       const last = ms[ms.length - 1];
+      const hasBlock = blocks.some(b => b.startDay + b.durationDays > last.startDay);
+      if (hasBlock) return prev;
       return prev - last.days;
     });
   }
@@ -90,12 +94,20 @@ export default function GanttChart() {
     if (!dragRef.current) return;
     const { type, blockId, startX, origStart, origDur } = dragRef.current;
     const delta = Math.round((e.clientX - startX) / DAY_WIDTH);
+    const maxDay = totalDaysRef.current;
     setBlocks(prev => prev.map(b => {
       if (b.id !== blockId) return b;
-      if (type === 'move') return { ...b, startDay: Math.max(0, origStart + delta) };
-      if (type === 'resize-right') return { ...b, durationDays: Math.max(MIN_DURATION, origDur + delta) };
+      if (type === 'move') {
+        const start = Math.max(0, Math.min(origStart + delta, maxDay - b.durationDays));
+        return { ...b, startDay: start };
+      }
+      if (type === 'resize-right') {
+        const dur = Math.max(MIN_DURATION, Math.min(origDur + delta, maxDay - b.startDay));
+        return { ...b, durationDays: dur };
+      }
       const newStart = Math.max(0, origStart + delta);
-      return { ...b, startDay: newStart, durationDays: Math.max(MIN_DURATION, origDur - (newStart - origStart)) };
+      const dur = Math.max(MIN_DURATION, Math.min(origDur - (newStart - origStart), maxDay - newStart));
+      return { ...b, startDay: newStart, durationDays: dur };
     }));
   }, []);
 
@@ -123,11 +135,17 @@ export default function GanttChart() {
     if (editingBlock) return;
     if (didDragRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left + (scrollRef.current?.scrollLeft ?? 0);
+    const x = e.clientX - rect.left;
     const day = Math.max(0, Math.floor(x / DAY_WIDTH));
     const id = `b${Date.now()}`;
-    setBlocks(prev => [...prev, { id, personId, label: 'New task', startDay: day, durationDays: 14, color: COLORS[prev.length % COLORS.length] }]);
+    const duration = 14;
+    setBlocks(prev => [...prev, { id, personId, label: 'New task', startDay: day, durationDays: duration, color: COLORS[prev.length % COLORS.length] }]);
     setEditingBlock(id);
+    setTotalDays(prev => {
+      const endDay = day + duration;
+      if (endDay >= prev - 7) return prev + daysInMonth(generateMonths(prev).length);
+      return prev;
+    });
   }
 
   function deleteBlock(id: string) {
