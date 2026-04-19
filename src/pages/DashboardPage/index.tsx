@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import DashboardKanbanPSP from "../../components/DashboardKanbanPSP";
 import { EditTicketProvider } from "../../components/DashboardKanbanPSP/context/useTicketContext";
 import GameSettings from "../../components/GameSettings";
+import GanttChart from "../../components/Gant/GanttChart";
 import { Spinner } from "../../components/shared/Spinner/spinner";
 import { useProjectStore } from "../../zustand/store";
 
@@ -12,11 +13,13 @@ const DashboardPage = () => {
 
     return (
         <EditTicketProvider>
-            <div className="bg-[#111] flex-1 overflow-hidden">
+            <div className="bg-[#111] flex-1 overflow-hidden flex flex-col">
                 {currentView === "kanban" ? (
                     <Suspense fallback={<Spinner />}>
                         <DashboardKanbanPSP currentProjectID={currentProjectID} />
                     </Suspense>
+                ) : currentView === "gantt" ? (
+                    <GanttChart />
                 ) : (
                     <GameSettings currentProjectID={currentProjectID} />
                 )}

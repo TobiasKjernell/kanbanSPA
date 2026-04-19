@@ -22,7 +22,7 @@ const ProjectDropdown = () => {
                     <ArrowLeft className={`${isOpen ? '-rotate-90' : 'rotate-0'} transition-transform duration-100`}/>
                 </div>
             </div>
-            <div className={`absolute bg-zinc-900 w-full psp-border-color ${isOpen ? 'border border-t-0' : 'border-none'}  top-[100%-2px] left-0 divide-y divide-zinc-700`}>
+            <div className={`absolute z-50 bg-zinc-900 w-full psp-border-color ${isOpen ? 'border border-t-0' : 'border-none'} top-full left-0 divide-y divide-zinc-700`}>
                 {isOpen &&
                     <div>
                         <div onClick={() => { setProject(IdProject.numberops); handleIsOpen(); }} className={`${currentProjectID === IdProject.numberops ? 'bg-zinc-800' : 'bg-zinc-900'} hover:bg-zinc-800 px-2`}>{getProjectByID(IdProject.numberops)}</div>

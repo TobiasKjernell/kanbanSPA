@@ -96,7 +96,7 @@ const DashboardKanbanPSP = ({ currentProjectID }: { currentProjectID: IdProject 
         <>
             {isPending && <Spinner />}
             {data?.columns && !isPending &&
-                <div className="flex flex-col w-full  psp-text-jura gap-1">
+                <div className="flex flex-col w-full p-5 psp-text-jura gap-1">
                     {isEditing && <DashboardKanbanEdit />}
                     <h2 className="flex gap-2 text-xl text-white">Kanban status:
                         <p className={isOnline === 'SUBSCRIBED' ? 'text-green-400' : 'text-red-500'}>{isOnline === 'SUBSCRIBED' ? 'Connected' : 'Disconnected'} </p>

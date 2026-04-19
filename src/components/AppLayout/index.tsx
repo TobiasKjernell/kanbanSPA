@@ -7,7 +7,7 @@ const AppLayout = () => {
     return (
         <div className="flex flex-col min-h-screen max-w-screen bg-[#111] ">
             {isAuth && <NavigationHeader />}
-            <div className="px-5 flex-1">
+            <div className="flex-1 flex flex-col">
                 <Outlet />
             </div>
         </div>

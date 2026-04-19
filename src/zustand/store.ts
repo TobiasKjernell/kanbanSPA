@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { IdProject } from "../lib/supabase/queriesClient";
 
-export type DashboardView = "kanban" | "gameSettings";
+export type DashboardView = "kanban" | "gameSettings" | "gantt";
 
 interface IStore {
     currentProjectID: IdProject;

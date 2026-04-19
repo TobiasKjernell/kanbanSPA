@@ -6,9 +6,10 @@ import { type DashboardView, useProjectStore } from "../../../zustand/store";
 const viewLabels: Record<DashboardView, string> = {
     kanban: "Kanban",
     gameSettings: "Game Settings",
+    gantt: "Gantt"
 };
 
-const views: DashboardView[] = ["kanban", "gameSettings"];
+const views: DashboardView[] = ["kanban", "gameSettings", "gantt"];
 
 const ViewDropdown = () => {
     const { currentView, setView } = useProjectStore();
