@@ -38,73 +38,113 @@ const DashboardKanbanEdit = () => {
         handleSetTicket(null); reset();
     }
 
-    return <div className="fixed h-screen w-full bg-black/30 top-0 right-0 flex flex-col justify-center items-center backdrop-blur-md psp-text-jura text-white">
-        <form className="bg-zinc-900 w-auto text-lg border border-zinc-700 rounded-sm" onSubmit={handleSubmit(values => {
-            mutate({
-                ticketId: currentTicket!.id,
-
-                createInfo: {
-                    content: values.content,
-                    assigned: values.assigned,
-                    status: values.status,
-                    tester: values.tester === 'none' || values.tester === '' ? 'none' : values.tester,
-                    testerFeedback: values.testerFeedback ? values.testerFeedback : '',
-                    project: currentTicket!.project_id!
-                },
-                updateType: UpdateTypeEnum.info
-            })
-        })}>
-            <fieldset className="flex items-center justify-between  border-zinc-700 bg-zinc-900 border-b px-2">
-                {errorEdit && <div className="bg-red-500 text-xs">Cannot edit, server issues</div>}
-                <div className="flex">
-                    <label className="">Assign:</label>
-                    {errorUsers ?
-                        <div className="bg-red-500 text-xs">Cannot get users </div>
-                        :
-                        <>
-                            {data && <select {...register('assigned')} className="w-full bg-zinc-900 text-center">
-                                {data && data.data?.map((user, index) => <option key={index} value={user.name!}>{user.name}</option>)}
-                            </select> }
-                        </>
-                    }
-                    {errors.tester && <div className="bg-red-500 text-xs">{errors.tester.message}</div>}
-                </div>
-                <div className="flex">
-                    <label className="">Tester:</label>
-                    {errorUsers ?
-                        <div className="bg-red-500 text-xs">Cannot get users </div  >
-                        : <>
-                            {data && <select {...register('tester')} id='tester' className="w-full bg-zinc-900 text-center">
-                                <option value={'none'}>None</option>
-                                {data && data.data?.map((user, index) => <option key={index} value={user.name!}>{user.name}</option>)}
-                            </select>}
-                        </>
-
-                    }
-                    {errors.tester && <div className="bg-red-500 text-xs">{errors.tester.message}</div>}
+    return (
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            onClick={handleCancel}
+        >
+            <form
+                className="relative w-full max-w-2xl mx-4 bg-zinc-900 border border-[#cea86f]/30 rounded-sm shadow-2xl text-white font-[Jura]"
+                onClick={e => e.stopPropagation()}
+                onSubmit={handleSubmit(values => {
+                    mutate({
+                        ticketId: currentTicket!.id,
+                        createInfo: {
+                            content: values.content,
+                            assigned: values.assigned,
+                            status: values.status,
+                            tester: values.tester === 'none' || values.tester === '' ? 'none' : values.tester,
+                            testerFeedback: values.testerFeedback ? values.testerFeedback : '',
+                            project: currentTicket!.project_id!
+                        },
+                        updateType: UpdateTypeEnum.info
+                    })
+                })}
+            >
+                {/* Header */}
+                <div className="flex items-center justify-between px-6 py-4 border-b border-[#cea86f]/30">
+                    <h2 className="text-[#cea86f] text-sm font-semibold tracking-widest uppercase">Edit Ticket</h2>
+                    {errorEdit && (
+                        <span className="text-xs text-red-400 bg-red-400/10 px-2 py-1 rounded">Server error — could not save</span>
+                    )}
+                    <button
+                        type="button"
+                        onClick={handleCancel}
+                        className="text-zinc-500 hover:text-[#cea86f] transition-colors text-lg leading-none cursor-pointer"
+                    >✕</button>
                 </div>
 
-            </fieldset>
-            <div className="flex flex-col lg:flex-row">
-                <fieldset className="flex flex-col px-2">
-                    <label className="border-b border-zinc-700">Content</label>
-                    <textarea disabled={isPending} className="p-2 min-h-60 bg-zinc-800" id="content" {...register('content')}></textarea>
-                    {errors.content && <div className="bg-red-500 text-xs">{errors.content.message}</div>}
-                </fieldset>
-                <fieldset className="flex flex-col px-2">
-                    <label className="border-b border-zinc-700">Test notes</label>
-                    <textarea disabled={isPending} className="p-2 min-h-60 bg-zinc-800" id="testerFeedback" {...register('testerFeedback')}></textarea>
-                    {errors.testerFeedback && <div className="bg-red-500 text-xs">{errors.testerFeedback.message}</div>}
-                </fieldset>
-            </div>
-            <fieldset className="flex justify-between px-2">
-                <button disabled={isPending} className="cursor-pointer hover:text-zinc-300" onClick={(e) => { e.preventDefault(); handleCancel(); }}>Cancel</button>
-                <DashboardKanbanDelete />
-                <button disabled={isPending} className="cursor-pointer hover:text-zinc-300">Edit</button>
-            </fieldset>
-        </form>
-        {errors && <div>{errors.root?.message} </div>}
-    </div>
+                {/* Assign & Tester row */}
+                <div className="grid grid-cols-2 gap-px bg-[#cea86f]/10 border-b border-[#cea86f]/30">
+                    <div className="bg-zinc-900 px-6 py-4 flex flex-col gap-1">
+                        <label className="text-[10px] tracking-widest uppercase text-[#cea86f]/70">Assigned to</label>
+                        {errorUsers
+                            ? <span className="text-xs text-red-400">Could not load users</span>
+                            : <select {...register('assigned')} className="bg-zinc-800 border border-zinc-700 text-sm text-white px-3 py-2 rounded-sm focus:outline-none focus:border-[#cea86f]/60 transition-colors">
+                                {data?.data?.map((user, i) => <option key={i} value={user.name!}>{user.name}</option>)}
+                            </select>
+                        }
+                        {errors.assigned && <span className="text-xs text-red-400">{errors.assigned.message}</span>}
+                    </div>
+                    <div className="bg-zinc-900 px-6 py-4 flex flex-col gap-1">
+                        <label className="text-[10px] tracking-widest uppercase text-[#cea86f]/70">Tester</label>
+                        {errorUsers
+                            ? <span className="text-xs text-red-400">Could not load users</span>
+                            : <select {...register('tester')} className="bg-zinc-800 border border-zinc-700 text-sm text-white px-3 py-2 rounded-sm focus:outline-none focus:border-[#cea86f]/60 transition-colors">
+                                <option value="none">None</option>
+                                {data?.data?.map((user, i) => <option key={i} value={user.name!}>{user.name}</option>)}
+                            </select>
+                        }
+                        {errors.tester && <span className="text-xs text-red-400">{errors.tester.message}</span>}
+                    </div>
+                </div>
+
+                {/* Content & Test notes */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-[#cea86f]/10">
+                    <div className="bg-zinc-900 px-6 py-4 flex flex-col gap-2">
+                        <label className="text-[10px] tracking-widest uppercase text-[#cea86f]/70">Content</label>
+                        <textarea
+                            disabled={isPending}
+                            {...register('content')}
+                            className="bg-zinc-800 border border-zinc-700 text-sm text-white p-3 min-h-48 resize-none rounded-sm focus:outline-none focus:border-[#cea86f]/60 transition-colors disabled:opacity-50"
+                        />
+                        {errors.content && <span className="text-xs text-red-400">{errors.content.message}</span>}
+                    </div>
+                    <div className="bg-zinc-900 px-6 py-4 flex flex-col gap-2">
+                        <label className="text-[10px] tracking-widest uppercase text-[#cea86f]/70">Test notes</label>
+                        <textarea
+                            disabled={isPending}
+                            {...register('testerFeedback')}
+                            className="bg-zinc-800 border border-zinc-700 text-sm text-white p-3 min-h-48 resize-none rounded-sm focus:outline-none focus:border-[#cea86f]/60 transition-colors disabled:opacity-50"
+                        />
+                        {errors.testerFeedback && <span className="text-xs text-red-400">{errors.testerFeedback.message}</span>}
+                    </div>
+                </div>
+
+                {/* Footer actions */}
+                <div className="flex items-center justify-between px-6 py-4 border-t border-[#cea86f]/30">
+                    <button
+                        type="button"
+                        disabled={isPending}
+                        onClick={handleCancel}
+                        className="text-xs cursor-pointer tracking-widest uppercase text-zinc-400 hover:text-white transition-colors disabled:opacity-50"
+                    >
+                        Cancel
+                    </button>
+                    <DashboardKanbanDelete />
+                    <button
+                        type="submit"
+                        disabled={isPending}
+                        className="text-xs tracking-widest cursor-pointer uppercase px-5 py-2 bg-[#cea86f] text-zinc-900 font-semibold rounded-sm hover:bg-[#ddbf88] transition-colors disabled:opacity-50"
+                    >
+                        {isPending ? 'Saving…' : 'Save'}
+                    </button>
+                </div>
+
+                {errors.root && <div className="px-6 pb-4 text-xs text-red-400">{errors.root.message}</div>}
+            </form>
+        </div>
+    )
 }
 
 export default DashboardKanbanEdit;
