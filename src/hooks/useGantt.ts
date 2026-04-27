@@ -48,6 +48,6 @@ export const useGantt = (projectId: IdProject) => {
         queryKey: ["gantt", projectId],
         staleTime: 0,
     });
-
+    console.log(data);
     return { data, isPending, error };
 };
