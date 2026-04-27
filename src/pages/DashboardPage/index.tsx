@@ -19,7 +19,7 @@ const DashboardPage = () => {
                         <DashboardKanbanPSP currentProjectID={currentProjectID} />
                     </Suspense>
                 ) : currentView === "gantt" ? (
-                    <GanttChart />
+                    <GanttChart currentProjectID={currentProjectID} />
                 ) : (
                     <GameSettings currentProjectID={currentProjectID} />
                 )}

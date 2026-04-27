@@ -12,6 +12,8 @@ export enum IdProject {
 }
 
 export const supabase = createClient<Database>(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const db = supabase as any;
 
 export const singleKanbaPost = (project_id: IdProject) => {
     return supabase.from(`kanbanPosts_${project_id}`).select('*').single();
@@ -108,6 +110,76 @@ export const fetchKanbanData = async (projectId: IdProject, setPosts: Dispatch<S
   };
 };
 
+
+// ─── Gantt ───
+
+export interface GanttPersonRow {
+    id: string;
+    name: string;
+    position: number;
+}
+
+export interface GanttBlockRow {
+    id: string;
+    person_id: string;
+    label: string;
+    start_day: number;
+    duration_days: number;
+    color: string;
+}
+
+export const getAllGanttPeople = async (projectId: IdProject) => {
+    return db.from(`ganttPeople_${projectId}`).select('*').order('position');
+};
+
+export const getAllGanttBlocks = async (projectId: IdProject) => {
+    return db.from(`ganttBlocks_${projectId}`).select('*');
+};
+
+export const fetchGanttData = async (projectId: IdProject) => {
+    const [peopleRes, blocksRes] = await Promise.all([
+        getAllGanttPeople(projectId),
+        getAllGanttBlocks(projectId),
+    ]);
+    if (peopleRes.error) throw new Error(peopleRes.error.message);
+    if (blocksRes.error) throw new Error(blocksRes.error.message);
+    return { people: peopleRes.data as GanttPersonRow[], blocks: blocksRes.data as GanttBlockRow[] };
+};
+
+export const createGanttPerson = async (projectId: IdProject, id: string, name: string, position: number) => {
+    const { error } = await db.from(`ganttPeople_${projectId}`).insert({ id, name, position });
+    if (error) throw new Error(error.message);
+};
+
+export const updateGanttPerson = async (projectId: IdProject, id: string, name: string) => {
+    const { error } = await db.from(`ganttPeople_${projectId}`).update({ name }).eq('id', id);
+    if (error) throw new Error(error.message);
+};
+
+export const deleteGanttPerson = async (projectId: IdProject, id: string) => {
+    const { error } = await db.from(`ganttPeople_${projectId}`).delete().eq('id', id);
+    if (error) throw new Error(error.message);
+};
+
+export const createGanttBlock = async (projectId: IdProject, block: GanttBlockRow) => {
+    const { error } = await db.from(`ganttBlocks_${projectId}`).insert(block);
+    if (error) throw new Error(error.message);
+};
+
+export const updateGanttBlock = async (projectId: IdProject, id: string, updates: Partial<Omit<GanttBlockRow, 'id'>>) => {
+    const { error } = await db.from(`ganttBlocks_${projectId}`).update(updates).eq('id', id);
+    if (error) throw new Error(error.message);
+};
+
+export const deleteGanttBlock = async (projectId: IdProject, id: string) => {
+    const { error } = await db.from(`ganttBlocks_${projectId}`).delete().eq('id', id);
+    if (error) throw new Error(error.message);
+};
+
+export const deleteGanttBlocksByPerson = async (projectId: IdProject, personId: string) => {
+    const { error } = await db.from(`ganttBlocks_${projectId}`).delete().eq('person_id', personId);
+    if (error) throw new Error(error.message);
+};
 
 // ─── Game Settings ───
 

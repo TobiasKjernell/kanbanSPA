@@ -87,7 +87,7 @@ const DashboardKanbanPSP = ({ currentProjectID }: { currentProjectID: IdProject 
             )
             .subscribe((status) => { setIsOnline(status); })
 
-        return () => { supabase.removeChannel(channel) }
+        return () => { channel.unsubscribe() }
     }, [currentProjectID])
 
 
