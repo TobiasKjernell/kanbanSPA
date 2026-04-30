@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import DashboardKanbanPSP from "../../components/DashboardKanbanPSP";
 import { EditTicketProvider } from "../../components/DashboardKanbanPSP/context/useTicketContext";
 import GameSettings from "../../components/GameSettings";
-import GanttChart from "../../components/Gant/GanttChart";
+import GanttChart from "../../components/Gant";
 import { Spinner } from "../../components/shared/Spinner/spinner";
 import { useProjectStore } from "../../zustand/store";
 
