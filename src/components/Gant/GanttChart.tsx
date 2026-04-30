@@ -6,6 +6,7 @@ import {
     type IdProject,
     createGanttPerson, updateGanttPerson, deleteGanttPerson,
     createGanttBlock, updateGanttBlock, deleteGanttBlock, deleteGanttBlocksByPerson,
+    updateGanttTotalDays,
     type GanttPersonRow, type GanttBlockRow,
 } from '../../lib/supabase/queriesClient';
 import { useGantt, dbPersonToGantt, dbBlockToGantt, ganttBlockToDb, type GanttPerson, type GanttBlock } from '../../hooks/useGantt';
@@ -69,6 +70,7 @@ export default function GanttChart({ currentProjectID }: { currentProjectID: IdP
 interface InitialData {
     people: GanttPersonRow[];
     blocks: GanttBlockRow[];
+    totalDays: number;
 }
 
 function GanttChartInner({ initialData, currentProjectID }: { initialData: InitialData; currentProjectID: IdProject }) {
@@ -87,10 +89,11 @@ function GanttChartInner({ initialData, currentProjectID }: { initialData: Initi
     const [addingPerson, setAddingPerson] = useState(false);
     const [newPersonName, setNewPersonName] = useState('');
     const [colorPicker, setColorPicker] = useState<string | null>(null);
-    const [totalDays, setTotalDays] = useState(183);
+    const [totalDays, setTotalDays] = useState(initialData.totalDays);
 
     const totalDaysRef = useRef(totalDays);
     const blocksRef = useRef(blocks);
+    const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
     const scrollRef = useHorizontalScroll({speed: 2, debounce: false})
     const addInputRef = useRef<HTMLInputElement>(null);
     const todayRef = useRef<HTMLDivElement>(null)
@@ -137,21 +140,37 @@ function GanttChartInner({ initialData, currentProjectID }: { initialData: Initi
                         break;
                 }
             })
-            .subscribe(status => setIsOnline(status));  
-        return () => { channel.unsubscribe(); };
+            .on('broadcast', { event: 'total_days' }, ({ payload }) => {
+                setTotalDays(payload.totalDays as number);
+            })
+            .subscribe(status => setIsOnline(status));
+
+        channelRef.current = channel;
+        return () => { channel.unsubscribe(); channelRef.current = null; };
     }, [currentProjectID]);
 
     const months = useMemo(() => generateMonths(totalDays), [totalDays]);
 
-    function addMonth() { setTotalDays(prev => prev + daysInMonth(generateMonths(prev).length)); }
+    function broadcastTotalDays(days: number) {
+        channelRef.current?.send({ type: 'broadcast', event: 'total_days', payload: { totalDays: days } });
+    }
+
+    function addMonth() {
+        const newDays = totalDays + daysInMonth(generateMonths(totalDays).length);
+        setTotalDays(newDays);
+        broadcastTotalDays(newDays);
+        updateGanttTotalDays(currentProjectID, newDays).catch(console.error);
+    }
+
     function removeMonth() {
-        setTotalDays(prev => {
-            const ms = generateMonths(prev);
-            if (ms.length <= 1) return prev;
-            const last = ms[ms.length - 1];
-            if (blocks.some(b => b.startDay + b.durationDays > last.startDay)) return prev;
-            return prev - last.days;
-        });
+        const ms = generateMonths(totalDays);
+        if (ms.length <= 1) return;
+        const last = ms[ms.length - 1];
+        if (blocks.some(b => b.startDay + b.durationDays > last.startDay)) return;
+        const newDays = totalDays - last.days;
+        setTotalDays(newDays);
+        broadcastTotalDays(newDays);
+        updateGanttTotalDays(currentProjectID, newDays).catch(console.error);
     }
 
     function commitAddPerson() {

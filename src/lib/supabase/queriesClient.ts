@@ -136,14 +136,31 @@ export const getAllGanttBlocks = async (projectId: IdProject) => {
     return db.from(`ganttBlocks_${projectId}`).select('*');
 };
 
+export const fetchGanttTotalDays = async (projectId: IdProject): Promise<number> => {
+    const { data, error } = await db.from(`ganttSettings_${projectId}`).select('total_days').eq('id', 1).single();
+    if (error) return 183;
+    return (data?.total_days as number) ?? 183;
+};
+
+export const updateGanttTotalDays = async (projectId: IdProject, totalDays: number) => {
+    const { error } = await db
+        .from(`ganttSettings_${projectId}`)
+        .upsert({ id: 1, total_days: totalDays }, { onConflict: 'id' });
+    if (error) {
+        console.error(`updateGanttTotalDays failed for project ${projectId}:`, error);
+        throw new Error(error.message);
+    }
+};
+
 export const fetchGanttData = async (projectId: IdProject) => {
-    const [peopleRes, blocksRes] = await Promise.all([
+    const [peopleRes, blocksRes, totalDays] = await Promise.all([
         getAllGanttPeople(projectId),
         getAllGanttBlocks(projectId),
+        fetchGanttTotalDays(projectId),
     ]);
     if (peopleRes.error) throw new Error(peopleRes.error.message);
     if (blocksRes.error) throw new Error(blocksRes.error.message);
-    return { people: peopleRes.data as GanttPersonRow[], blocks: blocksRes.data as GanttBlockRow[] };
+    return { people: peopleRes.data as GanttPersonRow[], blocks: blocksRes.data as GanttBlockRow[], totalDays };
 };
 
 export const createGanttPerson = async (projectId: IdProject, id: string, name: string, position: number) => {
