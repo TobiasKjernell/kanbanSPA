@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { type DashboardView, useProjectStore } from "../../../zustand/store";
+import { IdProject } from "../../../lib/supabase/queriesClient";
 
 const viewLabels: Record<DashboardView, string> = {
     kanban: "Kanban",
@@ -12,7 +13,7 @@ const viewLabels: Record<DashboardView, string> = {
 const views: DashboardView[] = ["kanban", "gameSettings", "gantt"];
 
 const ViewDropdown = () => {
-    const { currentView, setView } = useProjectStore();
+    const { currentView, setView, currentProjectID } = useProjectStore();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -39,13 +40,13 @@ const ViewDropdown = () => {
             >
                 {isOpen &&
                     <div>
-                        {views.map((view) => (
+                        {views.map((view) => ( 
                             <div
                                 key={view}
                                 onClick={() => { setView(view); handleIsOpen(); }}
                                 className={`${currentView === view ? "bg-zinc-800" : "bg-zinc-900"} hover:bg-zinc-800 px-2 cursor-pointer`}
                             >
-                                {viewLabels[view]}
+                                {currentProjectID === IdProject.website && view === views[1] ? 'Web Settings' : viewLabels[view]}
                             </div>
                         ))}
                     </div>

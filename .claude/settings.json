@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Entwickling/Frontend/kanbanSPA/src/**)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Entwicklung\\\\Frontend\\\\kanbanSPA\" -Recurse -Include \"tailwind.config.*\", \"index.css\", \"globals.css\", \"*.config.ts\", \"*.config.js\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Read(//c/Udvikling/Frontend/**)"
+    ]
+  }
+}

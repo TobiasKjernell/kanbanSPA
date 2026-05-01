@@ -1,7 +1,7 @@
 import { createClient, type QueryData, type User } from "@supabase/supabase-js";
 import type z from "zod";
 import type { UpdateTypeEnum } from "../../components/DashboardKanbanPSP";
-import { kanbanPostSchema, loginSchema } from "../../schemas/schemas";
+import { kanbanPostSchema, loginSchema, signUpSchema } from "../../schemas/schemas";
 import type { Database } from "./database.types";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -21,6 +21,12 @@ export const singleKanbaPost = (project_id: IdProject) => {
 
 export const getUsers = async () => {
     return supabase.from('crew').select('name');
+}
+
+export const getCrew = async () => {
+    const { data, error } = await supabase.from('crew').select('id, name, email').order('id');
+    if (error) throw new Error(error.message);
+    return data;
 }
 
 export const allKanbanPosts = async (project_id: IdProject) => {
@@ -81,6 +87,27 @@ export const logout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw new Error(error.message);
 }
+
+export const signUp = async (userDataValues: z.infer<typeof signUpSchema>): Promise<User> => {
+    const parsedData = signUpSchema.parse(userDataValues);
+
+    const { data, error } = await supabase.auth.signUp({
+        email: parsedData.email,
+        password: parsedData.password,
+    });
+
+    if (error) throw new Error(error.message);
+    if (!data.user) throw new Error('Signup failed');
+
+    const { error: crewError } = await supabase.from('crew').insert({
+        email: parsedData.email,
+        name: parsedData.username,
+    });
+
+    if (crewError) throw new Error(crewError.message);
+
+    return data.user;
+};
 
 export const login = async (userDataValues: z.infer<typeof loginSchema>):Promise<User | {
     error: string;

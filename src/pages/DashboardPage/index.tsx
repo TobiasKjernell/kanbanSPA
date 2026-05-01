@@ -5,6 +5,8 @@ import GameSettings from "../../components/GameSettings";
 import GanttChart from "../../components/Gant";
 import { Spinner } from "../../components/shared/Spinner/spinner";
 import { useProjectStore } from "../../zustand/store";
+import { IdProject } from "../../lib/supabase/queriesClient";
+import WebSettings from "../../components/WebSettings";
 
 const DashboardPage = () => {
 
@@ -21,7 +23,8 @@ const DashboardPage = () => {
                 ) : currentView === "gantt" ? (
                     <GanttChart currentProjectID={currentProjectID} />
                 ) : (
-                    <GameSettings currentProjectID={currentProjectID} />
+                    currentProjectID === IdProject.website && currentView === 'gameSettings' ?
+                        <WebSettings /> : <GameSettings currentProjectID={currentProjectID} />    
                 )}
             </div>
         </EditTicketProvider>
