@@ -29,7 +29,7 @@ const ViewDropdown = () => {
                     onClick={handleIsOpen}
                     className="w-full px-2 border psp-border-color flex justify-between items-center cursor-pointer"
                 >
-                    {viewLabels[currentView]}
+                     {currentProjectID === IdProject.website && currentView === views[1] ? 'Web Settings' : <p>{viewLabels[currentView]}</p>}
                     <ArrowLeft
                         className={`${isOpen ? "-rotate-90" : "rotate-0"} transition-transform duration-100`}
                     />
