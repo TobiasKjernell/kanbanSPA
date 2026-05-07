@@ -1,6 +1,18 @@
 @import "tailwindcss";
 
-:root {}
+:root {
+  --bg: #0c0c0d;
+  --bg-2: #131316;
+  --bg-3: #1a1a1f;
+  --ink: #ecead8;
+  --ink-2: #b8b6a8;
+  --ink-3: #76746a;
+  --ink-4: #44423c;
+  --line: rgba(236, 234, 216, 0.12);
+  --line-strong: rgba(236, 234, 216, 0.28);
+  --accent: #c8a878;
+  --pad: clamp(20px, 4vw, 56px);
+}
 
 @font-face {
   src: url("/fonts/Jura-Regular.ttf") format("truetype");
@@ -11,38 +23,79 @@
 }
 
 @theme {
-  --font-jura: "Jura";  
+  --font-jura: "Jura";
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  --animate-scroll-down: scroll-down 2.4s cubic-bezier(.6,0,.4,1) infinite;
 }
 
-@layer components { 
-  .psp-background-light {
-    background-color: #161f32;
-  }
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
 
-  .psp-background-dark {
-    background-color: #0a1428;
-  }
+@keyframes scroll-down {
+  0% { top: -36px; }
+  100% { top: 36px; }
+}
 
-  .psp-border-color {
-    border-color: #cea86f;
-  }
+html { scroll-behavior: smooth; }
+::selection { background: var(--accent); color: var(--bg); }
 
-  .psp-linear-background {
-    background: linear-gradient(to bottom right, #161f32, #0a1428)
-  }
-
-  .psp-text-gold {
-    color: #cea86f;
-  }
-
-  .psp-gsap-reset {
-    transform: none !important;
-    right: 0% !important;
-    top: 0 !important;  
-  }
-
+@layer components {
+  .psp-background-light { background-color: #161f32; }
+  .psp-background-dark { background-color: #0a1428; }
+  .psp-border-color { border-color: #cea86f; }
+  .psp-linear-background { background: linear-gradient(to bottom right, #161f32, #0a1428); }
+  .psp-text-gold { color: #cea86f; }
+  .psp-gsap-reset { transform: none !important; right: 0% !important; top: 0 !important; }
 }
 
 body {
   font-family: "Jura", serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
+
+/* Nav link animated underline */
+.nav-link { position: relative; padding-block: 6px; transition: color 250ms ease; }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0;
+  height: 1px; background: var(--accent);
+  transition: right 350ms cubic-bezier(.2,.6,.2,1);
+}
+.nav-link:hover::after { right: 0; }
+
+/* Journal row gradient glow on hover */
+.journal-row { position: relative; }
+.journal-row::before {
+  content: ""; position: absolute;
+  left: -16px; right: -16px; top: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(200,168,120,0.04) 50%, transparent);
+  opacity: 0; z-index: -1; transition: opacity 400ms ease;
+}
+.journal-row:hover::before { opacity: 1; }
+
+/* Scroll indicator animated line */
+.scroll-line::after {
+  content: ""; position: absolute;
+  top: -36px; left: 0; width: 1px; height: 36px;
+  background: var(--accent);
+  animation: scroll-down 2.4s cubic-bezier(.6,0,.4,1) infinite;
+}
+
+/* Scrollbar hide */
+.hide-scrollbar { scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
