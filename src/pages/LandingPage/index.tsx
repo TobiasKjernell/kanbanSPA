@@ -57,7 +57,7 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-[var(--pad)] py-[14px] border-b border-transparent transition-[background,backdrop-filter,padding,border-color] duration-300 ${scrolled ? 'bg-[rgba(12,12,13,0.72)] backdrop-blur-[14px] border-b-line' : ''}`}>
-      <Link to="/" className="flex items-center gap-[14px] text-ink" aria-label="Polarbear Sandbox Production">
+      <Link to="/" className="flex items-center gap-[14px] text-ink" aria-label="Polarbear Sandbox Production" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <span className="text-accent inline-flex" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="22" height="22">
             <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" strokeWidth="1.2" />
@@ -383,11 +383,11 @@ function GameCard({ game, idx }: { game: typeof GAMES[0]; idx: number }) {
             <span key={t} className="text-[10px] tracking-[0.22em] font-medium text-ink-3 uppercase border border-line px-[10px] py-[5px]">{t}</span>
           ))}
         </div>
-        <Link className="inline-flex items-center gap-[10px] mt-1.5 text-[11px] tracking-[0.28em] font-medium uppercase text-ink pb-2 border-b border-line-strong self-start transition-[color,border-color,gap] duration-[250ms] hover:text-accent hover:border-accent hover:gap-4" to={`/games/${game.id}`}>
+        <Link replace className="inline-flex items-center gap-[10px] mt-1.5 text-[11px] tracking-[0.28em] font-medium uppercase text-ink pb-2 border-b border-line-strong self-start transition-[color,border-color,gap] duration-[250ms] hover:text-accent hover:border-accent hover:gap-4" to={`/games/${game.id}`}>
           <span>View project</span>
           <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.4" /></svg>
         </Link>
-      </div>
+      </div>  
     </Reveal>
   )
 }

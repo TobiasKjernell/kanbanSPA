@@ -55,7 +55,7 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-[var(--pad)] py-[14px] border-b border-transparent transition-[background,backdrop-filter,padding,border-color] duration-300 ${scrolled ? 'bg-[rgba(12,12,13,0.72)] backdrop-blur-[14px] border-b-line' : ''}`}>
-      <Link to="/" className="flex items-center gap-[14px] text-ink">
+      <Link to="/" className="flex items-center gap-[14px] text-ink" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <span className="text-accent inline-flex">
           <svg viewBox="0 0 24 24" width="22" height="22">
             <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" strokeWidth="1.2" />
@@ -75,10 +75,10 @@ function Navbar() {
           <span className="flex-none w-[clamp(24px,4vw,56px)] h-px bg-ink-4" aria-hidden="true"></span>
         </Reveal>
         <div className="flex gap-[40px] text-[12px] tracking-[0.22em] font-medium text-ink-2 uppercase max-[880px]:hidden">
-          <a href="/#about" className="nav-link">About</a>
-          <a href="/#games" className="nav-link">Games</a>
-          <a href="/#gallery" className="nav-link">Gallery</a>
-          <a href="/#journal" className="nav-link">Journal</a>
+          <Link to="/#about" className="nav-link">About</Link>
+          <Link to="/#games" className="nav-link">Games</Link>
+          <Link to="/#gallery" className="nav-link">Gallery</Link>
+          <Link to="/#journal" className="nav-link">Journal</Link>
         </div>
       </div>
       <Link to="/login" className="inline-flex items-center gap-[10px] px-[18px] py-[10px] border border-line-strong text-[11px] tracking-[0.24em] font-medium uppercase text-ink transition-[border-color,color] duration-[250ms] hover:border-accent hover:text-accent">
@@ -116,7 +116,7 @@ function ProjectPlaceholder({ tone, num, ratio = '16/10' }: { tone: string; num:
         <circle cx="430" cy="160" r="24" fill={p[3]} opacity="0.18" />
         <rect x="40" y="60" width="180" height="2" fill={p[3]} opacity="0.5" />
       </svg>
-      <span className="absolute top-[14px] left-[14px] text-[10px] tracking-[0.32em] font-medium text-ink px-[10px] py-1 bg-[rgba(12,12,13,0.6)] backdrop-blur-[8px] border border-line">{num}</span>
+      {/* <span className="absolute top-[14px] left-[14px] text-[10px] tracking-[0.32em] font-medium text-ink px-[10px] py-1 bg-[rgba(12,12,13,0.6)] backdrop-blur-[8px] border border-line">{num}</span> */}
     </div>
   )
 }
@@ -214,7 +214,7 @@ function ProjectPage({ no, title, tagline, intro, status, genre, platform, playe
             <Reveal className="flex gap-3 items-center text-[10.5px] tracking-[0.28em] font-medium text-ink-3 uppercase mb-[clamp(20px,3vh,32px)]">
               <Link to="/" className="text-ink-3 transition-colors duration-[250ms] hover:text-accent">Studio</Link>
               <span>/</span>
-              <a href="/#games" className="text-ink-3 transition-colors duration-[250ms] hover:text-accent">Games</a>
+              <Link to="/#games" className="text-ink-3 transition-colors duration-[250ms] hover:text-accent">Games</Link>
               <span>/</span>
               <span className="text-ink">{title}</span>
             </Reveal>
@@ -307,10 +307,10 @@ function ProjectPage({ no, title, tagline, intro, status, genre, platform, playe
             Want updates as<br /><em className="italic text-accent font-extralight [transform:skewX(-9deg)] inline-block">{title}</em> takes shape?
           </Reveal>
           <Reveal delay={120} className="flex gap-[14px] flex-wrap justify-center">
-            <a className="inline-flex items-center gap-[10px] px-[22px] py-[14px] text-[11px] tracking-[0.28em] font-medium uppercase bg-accent text-bg border border-accent transition-all duration-[280ms] ease-[cubic-bezier(.2,.6,.2,1)] hover:bg-transparent hover:text-accent hover:-translate-y-0.5" href="/#journal">
+            <Link className="inline-flex items-center gap-[10px] px-[22px] py-[14px] text-[11px] tracking-[0.28em] font-medium uppercase bg-accent text-bg border border-accent transition-all duration-[280ms] ease-[cubic-bezier(.2,.6,.2,1)] hover:bg-transparent hover:text-accent hover:-translate-y-0.5" to="/#journal">
               <span>Read the journal</span>
               <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
-            </a>
+            </Link>
             <a className="inline-flex items-center gap-[10px] px-[22px] py-[14px] text-[11px] tracking-[0.28em] font-medium uppercase border border-line-strong text-ink-2 transition-all duration-[280ms] ease-[cubic-bezier(.2,.6,.2,1)] hover:text-ink hover:border-ink" href="#wishlist">Wishlist (TBA)</a>
           </Reveal>
         </section>
@@ -341,8 +341,8 @@ function ProjectPage({ no, title, tagline, intro, status, genre, platform, playe
           <div className="grid grid-cols-4 gap-8 max-[880px]:grid-cols-2 max-[880px]:gap-6">
             <div className="flex flex-col gap-3">
               <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Studio</span>
-              <a href="/#about" className="text-[13px] text-ink-2 tracking-[0.02em] transition-[color,transform] duration-[250ms] hover:text-accent hover:translate-x-1 inline-block">About</a>
-              <a href="/#journal" className="text-[13px] text-ink-2 tracking-[0.02em] transition-[color,transform] duration-[250ms] hover:text-accent hover:translate-x-1 inline-block">Journal</a>
+              <Link to="/#about" className="text-[13px] text-ink-2 tracking-[0.02em] transition-[color,transform] duration-[250ms] hover:text-accent hover:translate-x-1 inline-block">About</Link>
+              <Link to="/#journal" className="text-[13px] text-ink-2 tracking-[0.02em] transition-[color,transform] duration-[250ms] hover:text-accent hover:translate-x-1 inline-block">Journal</Link>
               <a href="#contact" className="text-[13px] text-ink-2 tracking-[0.02em] transition-[color,transform] duration-[250ms] hover:text-accent hover:translate-x-1 inline-block">Contact</a>
             </div>
             <div className="flex flex-col gap-3">

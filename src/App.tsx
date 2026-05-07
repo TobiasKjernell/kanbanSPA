@@ -9,8 +9,24 @@ import LandingPage from "./pages/LandingPage"
 import GamePage from "./pages/GamePage"
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0)
+      return
+    }
+    const id = hash.slice(1)
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      // Element not yet in DOM (cross-page navigation) — wait for render
+      const timer = setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      }, 80)
+      return () => clearTimeout(timer)
+    }
+  }, [pathname, hash])
   return null
 }
 
