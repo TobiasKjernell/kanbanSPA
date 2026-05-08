@@ -164,6 +164,20 @@ body {
   animation: scroll-down 2.4s cubic-bezier(.6, 0, .4, 1) infinite;
 }
 
+/* Footer link */
+.foot-link {
+  font-size: 13px;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  display: inline-block;
+  transition: color 250ms ease, transform 250ms ease;
+}
+
+.foot-link:hover {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
 /* Scrollbar hide */
 .hide-scrollbar {
   scrollbar-width: none;
