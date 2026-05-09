@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useLogin } from "../../../hooks/useLogin";
 import { loginSchema } from '../../../schemas/schemas';
 import { Spinner } from '../../../components/shared/Spinner/spinner';
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
     const { login, isLoggingIn, error } = useLogin();
@@ -14,7 +15,10 @@ const LoginForm = () => {
             className="w-full max-w-md bg-zinc-900 border border-[#cea86f]/30 rounded-sm text-white font-[Jura]"
         >
             <div className="px-6 py-4 border-b border-[#cea86f]/30">
+            <div className="flex justify-between">
                 <h2 className="text-sm tracking-widest uppercase psp-text-gold">Sign in</h2>
+                <Link to={'/'} className="text-xs hover:text-zinc-400">Back to site</Link>
+            </div>
                 <p className="text-zinc-400 text-xs mt-1">Enter your credentials to access the dashboard</p>
             </div>
 

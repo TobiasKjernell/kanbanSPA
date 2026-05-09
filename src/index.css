@@ -175,7 +175,6 @@ body {
 
 .foot-link:hover {
   color: var(--accent);
-  transform: translateX(4px);
 }
 
 /* Scrollbar hide */

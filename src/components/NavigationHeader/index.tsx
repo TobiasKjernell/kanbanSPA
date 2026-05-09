@@ -25,7 +25,7 @@ const NavigationHeader = () => {
             {isAuth &&
                 <div className="flex gap-3 md:gap-5 items-center">
                     <h2 className="hidden sm:block">{user?.user_metadata.display_name && user.user_metadata.display_name}</h2>
-                    <div onClick={() => logoutHandler()} className="border psp-border-color py-2 px-3 md:py-3 md:px-4 rounded-xl cursor-pointer hover:bg-zinc-900 text-sm md:text-base">Sign out</div>
+                    <div onClick={() => logoutHandler()} className="border psp-border-color py-2 px-3 md:py-1 md:px-4 cursor-pointer hover:bg-zinc-900 text-sm md:text-base">Sign out</div>
                 </div>
             }
         </div>

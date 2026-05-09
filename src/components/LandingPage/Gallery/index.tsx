@@ -67,7 +67,7 @@ export default function Gallery() {
         </Reveal>
       </div>
 
-      <div className="overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar cursor-grab active:cursor-grabbing" ref={scrollerRef} onScroll={onScroll}>
+      <div className="overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar mx-5" ref={scrollerRef} onScroll={onScroll}>
         <div className="flex gap-7 px-[var(--pad)] py-1 w-max">
           {ITEMS.map((g, i) => (
             <figure key={i} className="flex-none w-[clamp(280px,32vw,460px)] snap-start transition-transform duration-500 ease-[cubic-bezier(.2,.6,.2,1)] hover:-translate-y-[6px]">
@@ -88,14 +88,14 @@ export default function Gallery() {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto mt-9 px-[var(--pad)] grid grid-cols-[1fr_auto] gap-[18px] items-center">
+      {/* <div className="max-w-[1440px] mx-auto mt-9 px-[var(--pad)] grid grid-cols-[1fr_auto] gap-[18px] items-center">
         <div className="h-px bg-line relative overflow-hidden">
-          <div className="absolute inset-0 h-px bg-accent origin-left transition-transform duration-200" style={{ transform: `scaleX(${progress})` }} />
+          <div className="absolute inset-0 h-px bg-accent origin-left transition-transform duration-0" style={{ transform: `scaleX(${progress})` }} />
         </div>
         <span className="text-[10.5px] tracking-[0.28em] font-medium text-ink-3">
           {String(Math.round(progress * ITEMS.length)).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
         </span>
-      </div>
+      </div> */}
     </section>
   )
 }

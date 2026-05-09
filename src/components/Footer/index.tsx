@@ -23,19 +23,16 @@ export default function Footer() {
             <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Games</span>
             <Link to="/games/numops" className="foot-link">NumOps</Link>
             <Link to="/games/slotcarvr" className="foot-link">SlotcarVR Racing</Link>
-            <a href="#archive" className="foot-link">Jam Archive</a>
           </div>
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Crew</span>
             <Link to="/login" className="foot-link">Crew Login</Link>
-            <a href="#careers" className="foot-link">Careers (—)</a>
-            <a href="#press" className="foot-link">Press kit</a>
+            <span className="foot-link">Careers (—)</span>
           </div>
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Elsewhere</span>
-            <a href="#x" className="foot-link">Twitter / X</a>
-            <a href="#bsky" className="foot-link">Bluesky</a>
-            <a href="#yt" className="foot-link">YouTube</a>
+            <a href="#bsky" className="foot-link">Steam</a>
+            <a href="#yt" className="foot-link">Meta Store</a>
             <a href="#discord" className="foot-link">Discord</a>
           </div>
         </div>
