@@ -88,14 +88,14 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* <div className="max-w-[1440px] mx-auto mt-9 px-[var(--pad)] grid grid-cols-[1fr_auto] gap-[18px] items-center">
+      <div className="max-w-[1440px] mx-auto mt-9 px-[var(--pad)] grid-cols-[1fr_auto] gap-[18px] items-center hidden">
         <div className="h-px bg-line relative overflow-hidden">
           <div className="absolute inset-0 h-px bg-accent origin-left transition-transform duration-0" style={{ transform: `scaleX(${progress})` }} />
         </div>
         <span className="text-[10.5px] tracking-[0.28em] font-medium text-ink-3">
           {String(Math.round(progress * ITEMS.length)).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
         </span>
-      </div> */}
+      </div>
     </section>
   )
 }
