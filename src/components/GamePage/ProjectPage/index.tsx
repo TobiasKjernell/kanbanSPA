@@ -47,13 +47,13 @@ export default function ProjectPage({ no, title, tagline, intro, status, genre, 
         </section>
 
         {/* Intro */}
-        <section className="max-w-[1440px] mx-auto px-[var(--pad)] py-[clamp(80px,12vh,140px)] grid grid-cols-[1fr_1.5fr] gap-[clamp(40px,6vw,96px)] items-start max-[880px]:grid-cols-1">
+        <section className="max-w-[1440px] mx-auto px-[var(--pad)] py-[clamp(80px,12vh,140px)] grid grid-cols-[1fr_1.5fr] gap-[clamp(40px,6vw,96px)] items-start max-[880px]:grid-cols-1" >
           <Reveal className="inline-flex items-center text-[10.5px] tracking-[0.32em] font-medium text-ink-3 uppercase pb-[14px] border-b border-line mb-10 col-start-1">
             <span className="font-medium text-[11px] tracking-[0.22em] text-accent mr-4 inline-block">01</span>
             <span>Premise</span>
           </Reveal>
-          <Reveal as="p" delay={80} className="font-light text-[clamp(22px,2.4vw,34px)] leading-[1.3] m-0 text-ink tracking-[0.005em] col-start-2 row-start-1">{intro}</Reveal>
-          <div className="col-start-2 mt-8 flex flex-col gap-[18px]">
+          <Reveal as="p" delay={80} className="font-light text-[clamp(22px,2.4vw,34px)] leading-[1.3] m-0 text-ink tracking-[0.005em] min-[881px]:col-start-2 min-[881px]:row-start-1">{intro}</Reveal>
+          <div className="mt-8 flex flex-col gap-4.5 min-[881px]:col-start-2">
             {longCopy.map((para, i) => (
               <Reveal as="p" delay={i * 100} key={i} className="text-[15px] leading-[1.75] text-ink-2 m-0 max-w-[58ch] tracking-[0.015em]">{para}</Reveal>
             ))}
