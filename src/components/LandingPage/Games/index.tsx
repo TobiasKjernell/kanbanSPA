@@ -8,9 +8,9 @@ const GAMES = [
     id: 'numops',
     no: 'I',
     title: 'NumOps',
-    sub: 'A puzzle of operators and order.',
-    body: 'A logic-puzzler about composing number systems with the right operations, in the right order. In development.',
-    tags: ['Puzzle', 'Single-player', 'PC', 'In Development'],
+    sub: 'A math-based action game.',
+    body: 'A action game about solving math problems to survive. In development.',
+    tags: ['Single-player', 'PC', 'Mobile', 'In Development'],
     tone: 'warm',
   },
   {

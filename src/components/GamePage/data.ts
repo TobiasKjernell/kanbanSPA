@@ -9,6 +9,7 @@ export interface GameData {
   players: string
   releaseEta: string
   shotsTone: string
+  shots?: string[]
   longCopy: string[]
   facts: { head: string; text: string }[]
   otherId: string
@@ -20,26 +21,31 @@ export interface GameData {
 export const GAME_DATA: Record<string, GameData> = {
   numops: {
     no: 'PROJECT I',
-    title: 'NumOps',
-    tagline: 'Top-down math solver',
-    intro: 'A mathematical game about solving problems at reload, practice your early stage math.',
+    title: 'NumberOps',
+    tagline: 'Shoot straight. Reload smart.',
+    intro: 'A top-down shooter where clearing monsters is only half the fight — every reload hands you a math problem, and getting it right is what keeps you standing.',
     status: 'In development',
     genre: 'Top-down shooter',
     platform: 'Mobile / PC',
     players: 'Single-player',
     releaseEta: 'TBA · 2027',
     shotsTone: 'warm',
+    shots: [
+      '/NumberOpsPicture/Image%20Sequence_001_0000.webp',
+      '/NumberOpsPicture/Image%20Sequence_002_0000.webp',
+      '/NumberOpsPicture/Image%20Sequence_003_0000.webp',
+      '/NumberOpsPicture/Image%20Sequence_004_0000.webp',
+    ],
     websiteUrl: 'https://numberops.polarbearsandboxproduction.com/',
     longCopy: [
-      "NumOps started as a jam prototype: a single screen, a handful of operator tiles, and a target number. We kept coming back to it. Three jams later, it has rules, a soundtrack, and a stubborn personality.",
-      "Each puzzle is a small machine. You feed it numbers; you arrange operators; you press run. When it works, the screen exhales. When it doesn't, the puzzle quietly tells you which step gave up first — and then it's on you.",
-      "We're building it for the kind of evening where you want to think, but gently. Forty-five minutes, a cup of something warm, and a problem that fits.",
+      "NumberOps started as a prototype: a single room, a handful of monsters, and a magazine that ran out at the worst possible time. We kept coming back to it. When the people had time over, it has levels, a soundtrack, and a stubborn personality.",
+      "You fight the way you'd expect — line up the shot, clear the area. Then the mag runs dry, and the game asks you a question instead of showing you a loading bar. Answer it fast and clean, and you're back in the fight before the next wave notices you stopped.",
+      "It's a shooter for the part of your brain that likes both things at once: the twitch of a good dodge, and the small, satisfying click of a problem solved under pressure.",
     ],
     facts: [
-      { head: 'Born in a 48-hour jam',       text: "Jam #11. The first prototype was a spreadsheet with a play button. We've kept the spreadsheet energy and lost the spreadsheet." },
-      { head: 'Puzzles compose, like operators', text: 'Solutions to early puzzles become primitives in later ones. The further you go, the more your toolbox is something you built yourself.' },
-      { head: 'No timer, no score',           text: "We don't believe in punishing thought. The only reward is the next puzzle, and the only score is the one you keep in your head." },
-      { head: 'Hand-tuned, not generated',    text: "Every puzzle is authored. We tried procgen for a week and it produced 4,000 puzzles with one good one in the pile. We'd rather hand you the good one." },
+      { head: 'Born during free-time', text: "André started it as a side project and then other joined in." },
+      { head: 'Reloading is the math problem', text: "There is no idle reload animation. The pause where you'd normally wait is replaced with a problem — solve it, and the gun comes back up loaded, fail and you will punished." },
+      { head: 'Levels scale the fight, not just the math', text: "Later levels don't just ask harder sums — they ask them while more monsters are closing in." },
     ],
     otherId: 'slotcarvr',
     otherTitle: 'SlotcarVR Racing',
@@ -62,13 +68,13 @@ export const GAME_DATA: Record<string, GameData> = {
       "Multiplayer is split-screen reborn: two to four players around the same shelf, each with their own controller, all looking at the same plastic landscape from different angles.",
     ],
     facts: [
-      { head: 'Built for the Quest, first',  text: "Standalone VR is the design constraint. If a track doesn't run at frame on the headset, it doesn't ship — full stop." },
-      { head: 'Hand-painted track skins',    text: "Every loop, hairpin and chicane is dressed by hand. The 'plastic with brushstrokes' look is the goal, not an accident." },
-      { head: 'Hairline timing matters',     text: 'Slot cars live or die in the last centimeter before the corner. We rebuilt the throttle model three times to get that millisecond right.' },
-      { head: 'Local + online, same room',   text: "Up to four players can share a virtual shelf. Bring your own headset; pick your own car; argue over who gets the red one." },
+      { head: 'Built for the Quest, first', text: "Standalone VR is the design constraint. If a track doesn't run at frame on the headset, it doesn't ship — full stop." },
+      { head: 'Hand-painted track skins', text: "Every loop, hairpin and chicane is dressed by hand. The 'plastic with brushstrokes' look is the goal, not an accident." },
+      { head: 'Hairline timing matters', text: 'Slot cars live or die in the last centimeter before the corner. We rebuilt the throttle model three times to get that millisecond right.' },
+      { head: 'Local + online, same room', text: "Up to four players can share a virtual shelf. Bring your own headset; pick your own car; argue over who gets the red one." },
     ],
     otherId: 'numops',
-    otherTitle: 'NumOps',
+    otherTitle: 'NumberOps',
     otherNo: 'PROJECT I',
   },
 }

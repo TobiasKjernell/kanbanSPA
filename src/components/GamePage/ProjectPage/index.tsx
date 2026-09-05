@@ -7,7 +7,24 @@ import type { GameData } from '../data'
 
 const META_KEYS = ['Status', 'Genre', 'Platform', 'Players', 'Release'] as const
 
-export default function ProjectPage({ no, title, tagline, intro, status, genre, platform, players, releaseEta, facts, longCopy, shotsTone, otherId, otherTitle, otherNo, websiteUrl }: GameData) {
+function GalleryShot({ src, alt, tone, num, ratio }: { src?: string; alt: string; tone: string; num: string; ratio: string }) {
+  if (src) {
+    // Screenshots are captured at 16/9 — keep their native ratio instead of the placeholder's varied crops.
+    return (
+      <div className="relative w-full overflow-hidden border border-line" style={{ aspectRatio: '16/9' }}>
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-full object-cover block transition-[filter,transform] duration-[600ms] ease-[cubic-bezier(.2,.6,.2,1)] min-[881px]:grayscale-[70%] min-[881px]:sepia-[25%] min-[881px]:brightness-[0.65] min-[881px]:contrast-[1.05] min-[881px]:scale-[1.03] min-[881px]:group-hover:grayscale-0 min-[881px]:group-hover:sepia-0 min-[881px]:group-hover:brightness-100 min-[881px]:group-hover:contrast-100 min-[881px]:group-hover:scale-100"
+        />
+        <div className="absolute inset-0 pointer-events-none transition-opacity duration-[600ms] ease-[cubic-bezier(.2,.6,.2,1)] opacity-0 min-[881px]:opacity-100 min-[881px]:group-hover:opacity-0" style={{ background: 'linear-gradient(160deg, rgba(12,12,13,0.35) 0%, rgba(200,168,120,0.22) 100%)', mixBlendMode: 'multiply' }} />
+      </div>
+    )
+  }
+  return <ProjectPlaceholder tone={tone} num={num} ratio={ratio} />
+}
+
+export default function ProjectPage({ no, title, tagline, intro, status, genre, platform, players, releaseEta, facts, longCopy, shotsTone, shots, otherId, otherTitle, otherNo, websiteUrl }: GameData) {
   const metaValues = [status, genre, platform, players, releaseEta]
 
   return (
@@ -69,24 +86,24 @@ export default function ProjectPage({ no, title, tagline, intro, status, genre, 
         <section className="max-w-[1440px] mx-auto px-[var(--pad)] py-[clamp(80px,12vh,140px)]">
           <Reveal className="inline-flex items-center text-[10.5px] tracking-[0.32em] font-medium text-ink-3 uppercase pb-[14px] border-b border-line mb-10">
             <span className="font-medium text-[11px] tracking-[0.22em] text-accent mr-4 inline-block">02</span>
-            <span>From the build</span>
+            <span>From the game</span>
           </Reveal>
           <div className="grid grid-cols-[1.4fr_1fr] gap-5 max-[880px]:grid-cols-1">
-            <Reveal className="flex flex-col gap-3 row-span-2 max-[880px]:row-span-1">
-              <ProjectPlaceholder tone={shotsTone} num="01" ratio="16/10" />
-              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 01 — Pre-alpha capture</figcaption>
+            <Reveal className="group flex flex-col gap-3 row-span-2 max-[880px]:row-span-1">
+              <GalleryShot src={shots?.[0]} alt={`${title} — pre-alpha capture`} tone={shotsTone} num="01" ratio="16/10" />
+              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 01</figcaption>
             </Reveal>
-            <Reveal delay={80} className="flex flex-col gap-3">
-              <ProjectPlaceholder tone={shotsTone} num="02" ratio="4/3" />
-              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 02 — Detail study</figcaption>
+            <Reveal delay={80} className="group flex flex-col gap-3">
+              <GalleryShot src={shots?.[1]} alt={`${title} — detail study`} tone={shotsTone} num="02" ratio="4/3" />
+              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 02</figcaption>
             </Reveal>
-            <Reveal delay={160} className="flex flex-col gap-3">
-              <ProjectPlaceholder tone={shotsTone} num="03" ratio="4/3" />
-              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 03 — Lighting test</figcaption>
+            <Reveal delay={160} className="group flex flex-col gap-3">
+              <GalleryShot src={shots?.[2]} alt={`${title} — lighting test`} tone={shotsTone} num="03" ratio="4/3" />
+              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 03</figcaption>
             </Reveal>
-            <Reveal delay={240} className="flex flex-col gap-3 col-span-2 max-[880px]:col-span-1">
-              <ProjectPlaceholder tone={shotsTone} num="04" ratio="21/9" />
-              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 04 — Wide composition</figcaption>
+            <Reveal delay={240} className="group flex flex-col gap-3 col-span-2 max-[880px]:col-span-1">
+              <GalleryShot src={shots?.[3]} alt={`${title} — wide composition`} tone={shotsTone} num="04" ratio="21/9" />
+              <figcaption className="text-[11px] tracking-[0.22em] font-medium text-ink-3 uppercase">Frame 04</figcaption>
             </Reveal>
           </div>
         </section>
