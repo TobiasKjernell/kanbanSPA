@@ -3,7 +3,18 @@ import { Link } from 'react-router-dom'
 import Reveal from '../../Reveal'
 import { GalleryPlaceholder } from '../../Placeholder'
 
-const GAMES = [
+interface GameCardData {
+  id: string
+  no: string
+  title: string
+  sub: string
+  body: string
+  tags: string[]
+  tone: string
+  image?: string
+}
+
+const GAMES: GameCardData[] = [
   {
     id: 'numops',
     no: 'I',
@@ -12,9 +23,10 @@ const GAMES = [
     body: 'A action game about solving math problems to survive. In development.',
     tags: ['Single-player', 'PC', 'Mobile', 'In Development'],
     tone: 'warm',
+    image: '/NumberOpsPicture/Image%20Sequence_001_0000.webp',
   },
-  {
-    id: 'slotcarvr',
+  { 
+    id: 'slotcarvr',  
     no: 'II',
     title: 'SlotcarVR Racing',
     sub: 'Slot-car nostalgia, in room-scale.',
@@ -34,9 +46,13 @@ function GameCard({ game, idx }: { game: typeof GAMES[0]; idx: number }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className={`relative overflow-hidden ${game.image ? 'aspect-video' : 'aspect-16/10'}`}>
         <div className={`w-full h-full transition-transform duration-[1200ms] ease-[cubic-bezier(.2,.6,.2,1)] ${hover ? 'scale-[1.06]' : 'scale-100'}`}>
-          <GalleryPlaceholder tone={game.tone} num={`g${idx}`} />
+          {game.image ? (
+            <img src={game.image} alt={game.title} className="w-full h-full object-cover object-center block" />
+          ) : (
+            <GalleryPlaceholder tone={game.tone} num={`g${idx}`} />
+          )}
         </div>
         <span className="absolute top-[18px] right-[18px] text-[14px] tracking-[0.18em] font-medium text-accent border border-accent px-3 py-1.5 bg-[rgba(12,12,13,0.6)] backdrop-blur-[6px]">{game.no}</span>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(12,12,13,0.5)] pointer-events-none" />
