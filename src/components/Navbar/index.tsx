@@ -42,8 +42,6 @@ export default function Navbar() {
         <div className="flex gap-[40px] text-[12px] tracking-[0.22em] font-medium text-ink-2 uppercase max-[880px]:hidden">
           <Link to="/#about" className="nav-link">About</Link>
           <Link to="/#games" className="nav-link">Games</Link>
-          <Link to="/#gallery" className="nav-link">Gallery</Link>
-          <Link to="/#journal" className="nav-link">Journal</Link>
         </div>
       </div>
 

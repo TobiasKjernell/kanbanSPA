@@ -7,7 +7,7 @@ import type { GameData } from '../data'
 
 const META_KEYS = ['Status', 'Genre', 'Platform', 'Players', 'Release'] as const
 
-export default function ProjectPage({ no, title, tagline, intro, status, genre, platform, players, releaseEta, facts, longCopy, shotsTone, otherId, otherTitle, otherNo }: GameData) {
+export default function ProjectPage({ no, title, tagline, intro, status, genre, platform, players, releaseEta, facts, longCopy, shotsTone, otherId, otherTitle, otherNo, websiteUrl }: GameData) {
   const metaValues = [status, genre, platform, players, releaseEta]
 
   return (
@@ -33,6 +33,11 @@ export default function ProjectPage({ no, title, tagline, intro, status, genre, 
             <Reveal delay={320} className="text-[clamp(16px,1.6vw,22px)] text-ink-2 max-w-[620px] tracking-[0.02em] leading-[1.5]">
               <em className="text-accent italic [transform:skewX(-8deg)] inline-block">{tagline}</em>
             </Reveal>
+            {websiteUrl && (
+              <Reveal delay={400} className="mt-8">
+                <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-[10px] px-[22px] py-[14px] text-[11px] tracking-[0.28em] font-medium uppercase border border-line-strong text-ink-2 transition-all duration-[280ms] ease-[cubic-bezier(.2,.6,.2,1)] hover:text-ink hover:border-ink">Visit website</a>
+              </Reveal>
+            )}
           </div>
         </header>
 
@@ -105,19 +110,7 @@ export default function ProjectPage({ no, title, tagline, intro, status, genre, 
           </ol>
         </section>
 
-        {/* CTA */}
-        <section className="max-w-[1440px] mx-auto px-[var(--pad)] py-[clamp(80px,12vh,140px)] text-center flex flex-col items-center gap-8 border-t border-b border-line">
-          <Reveal as="h2" className="font-light text-[clamp(32px,4.4vw,56px)] leading-[1.05] m-0">
-            Want updates as<br /><em className="italic text-accent font-extralight [transform:skewX(-9deg)] inline-block">{title}</em> takes shape?
-          </Reveal>
-          <Reveal delay={120} className="flex gap-[14px] flex-wrap justify-center">
-            <Link to="/#journal" className="inline-flex items-center gap-[10px] px-[22px] py-[14px] text-[11px] tracking-[0.28em] font-medium uppercase bg-accent text-bg border border-accent transition-all duration-[280ms] ease-[cubic-bezier(.2,.6,.2,1)] hover:bg-transparent hover:text-accent hover:-translate-y-0.5">
-              <span>Read the journal</span>
-              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
-            </Link>
-            <a className="inline-flex items-center gap-[10px] px-[22px] py-[14px] text-[11px] tracking-[0.28em] font-medium uppercase border border-line-strong text-ink-2 transition-all duration-[280ms] ease-[cubic-bezier(.2,.6,.2,1)] hover:text-ink hover:border-ink" href="#wishlist">Wishlist (TBA)</a>
-          </Reveal>
-        </section>
+            
 
         {/* Next project */}
         <section className="max-w-[1440px] mx-auto px-[var(--pad)] py-[clamp(60px,8vh,100px)]">

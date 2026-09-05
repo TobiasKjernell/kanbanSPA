@@ -14,6 +14,7 @@ export interface GameData {
   otherId: string
   otherTitle: string
   otherNo: string
+  websiteUrl?: string
 }
 
 export const GAME_DATA: Record<string, GameData> = {
@@ -28,6 +29,7 @@ export const GAME_DATA: Record<string, GameData> = {
     players: 'Single-player',
     releaseEta: 'TBA · 2027',
     shotsTone: 'warm',
+    websiteUrl: 'https://numberops.polarbearsandboxproduction.com/',
     longCopy: [
       "NumOps started as a jam prototype: a single screen, a handful of operator tiles, and a target number. We kept coming back to it. Three jams later, it has rules, a soundtrack, and a stubborn personality.",
       "Each puzzle is a small machine. You feed it numbers; you arrange operators; you press run. When it works, the screen exhales. When it doesn't, the puzzle quietly tells you which step gave up first — and then it's on you.",

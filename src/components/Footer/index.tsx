@@ -16,8 +16,6 @@ export default function Footer() {
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Studio</span>
             <Link to="/#about" className="foot-link">About</Link>
-            <Link to="/#journal" className="foot-link">Journal</Link>
-            <a href="#contact" className="foot-link">Contact</a>
           </div>
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Games</span>
@@ -33,7 +31,6 @@ export default function Footer() {
             <span className="text-[10px] tracking-[0.32em] font-medium text-ink-3 uppercase mb-2">Elsewhere</span>
             <a href="#bsky" className="foot-link">Steam</a>
             <a href="#yt" className="foot-link">Meta Store</a>
-            <a href="#discord" className="foot-link">Discord</a>
           </div>
         </div>
       </div>

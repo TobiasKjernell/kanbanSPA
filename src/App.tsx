@@ -9,7 +9,7 @@ import LandingPage from "./pages/LandingPage"
 import GamePage from "./pages/GamePage"
 
 function ScrollToTop() {
-  const { pathname, hash } = useLocation()
+  const { hash, key } = useLocation()
   useEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0)
@@ -26,7 +26,7 @@ function ScrollToTop() {
       }, 80)
       return () => clearTimeout(timer)
     }
-  }, [pathname, hash])
+  }, [key, hash])
   return null
 }
 
